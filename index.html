@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Wholstyle — Coming Soon</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Bebas+Neue&display=swap" rel="stylesheet" />
+  <style>
+    :root {
+      --ink: #0a0a0a;
+      --paper: #f2f0eb;
+      --acid: #c8f53b;
+      --red: #e8392a;
+      --mid: #888;
+    }
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    html, body { height: 100%; }
+    body {
+      background: var(--ink);
+      color: var(--paper);
+      font-family: 'Space Mono', monospace;
+      min-height: 100vh;
+      overflow-x: hidden;
+      cursor: crosshair;
+    }
+    body::after {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.05) 2px, rgba(0,0,0,0.05) 4px);
+      pointer-events: none;
+      z-index: 999;
+    }
+    .title {
+      font-family: 'Bebas Neue', sans-serif;
+      font-size: clamp(5rem, 22vw, 18rem);
+      line-height: 0.88;
+      letter-spacing: -0.01em;
+      color: var(--paper);
+      user-select: none;
+      display: inline-block;
+    }
+    .title span { color: var(--acid); }
+    .title:hover { animation: glitch 0.3s steps(2) infinite; }
+    @keyframes glitch {
+      0%   { text-shadow: 2px 0 var(--red), -2px 0 var(--acid); }
+      25%  { text-shadow: -2px 0 var(--red), 2px 0 var(--acid); }
+      50%  { text-shadow: 2px 2px var(--red), -2px -2px var(--acid); }
+      75%  { text-shadow: none; }
+      100% { text-shadow: -2px 0 var(--red), 2px 0 var(--acid); }
+    }
+    .ticker-wrap { overflow: hidden; border-top: 1px solid #222; border-bottom: 1px solid #222; padding: 10px 0; white-space: nowrap; }
+    .ticker { display: inline-block; animation: ticker 18s linear infinite; font-size: 0.7rem; letter-spacing: 0.2em; color: var(--mid); text-transform: uppercase; }
+    @keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
+    .counter-box { border: 1px solid #222; padding: 1.2rem 1.5rem; }
+    .counter-num { font-family: 'Bebas Neue', sans-serif; font-size: clamp(2rem, 7vw, 4.5rem); color: var(--acid); line-height: 1; }
+    .counter-label { font-size: 0.55rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--mid); margin-top: 4px; }
+    .brutal-input { background: transparent; border: 1px solid #333; color: var(--paper); font-family: 'Space Mono', monospace; font-size: 0.78rem; letter-spacing: 0.05em; padding: 13px 14px; outline: none; width: 100%; transition: border-color 0.2s; }
+    .brutal-input::placeholder { color: #444; }
+    .brutal-input:focus { border-color: var(--acid); }
+    .brutal-btn { background: var(--acid); color: var(--ink); font-family: 'Space Mono', monospace; font-size: 0.8rem; font-weight: 700; padding: 13px 20px; border: none; cursor: crosshair; white-space: nowrap; transition: background 0.15s, transform 0.1s; }
+    .brutal-btn:hover { background: #d6ff40; transform: translate(-1px,-1px); }
+    .brutal-btn:active { transform: translate(0,0); }
+    .tag { display: inline-block; border: 1px solid #2a2a2a; color: var(--mid); font-size: 0.58rem; letter-spacing: 0.2em; text-transform: uppercase; padding: 4px 10px; }
+    .tag:hover { border-color: #555; }
+    @keyframes fadeUp { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: translateY(0); } }
+    .a1 { animation: fadeUp 0.7s ease 0.05s both; }
+    .a2 { animation: fadeUp 0.7s ease 0.2s both; }
+    .a3 { animation: fadeUp 0.7s ease 0.4s both; }
+    .a4 { animation: fadeUp 0.7s ease 0.55s both; }
+    .a5 { animation: fadeUp 0.7s ease 0.7s both; }
+    @keyframes blink { 50% { opacity: 0; } }
+    .dot { animation: blink 1.2s step-start infinite; display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--red); }
+    .stripe-block { background: repeating-linear-gradient(45deg, #181818, #181818 3px, transparent 3px, transparent 10px); }
+  </style>
+</head>
+<body class="flex flex-col min-h-screen">
+
+  <nav class="a1 flex justify-between items-center px-6 md:px-10 py-5 border-b" style="border-color:#1c1c1c;">
+    <div class="flex items-center gap-2">
+      <span class="dot"></span>
+      <span class="text-xs tracking-widest uppercase" style="color:var(--mid);">Loading</span>
+    </div>
+    <div class="flex gap-1">
+      <span class="tag">2025</span>
+      <span class="tag">Lifestyle</span>
+    </div>
+  </nav>
+
+  <div class="a1 ticker-wrap">
+    <span class="ticker">
+      WHOLSTYLE &nbsp;·&nbsp; COMING SOON &nbsp;·&nbsp; WHOLSTYLE &nbsp;·&nbsp; COMING SOON &nbsp;·&nbsp;
+      WHOLSTYLE &nbsp;·&nbsp; COMING SOON &nbsp;·&nbsp; WHOLSTYLE &nbsp;·&nbsp; COMING SOON &nbsp;·&nbsp;
+      WHOLSTYLE &nbsp;·&nbsp; COMING SOON &nbsp;·&nbsp; WHOLSTYLE &nbsp;·&nbsp; COMING SOON &nbsp;·&nbsp;
+      WHOLSTYLE &nbsp;·&nbsp; COMING SOON &nbsp;·&nbsp; WHOLSTYLE &nbsp;·&nbsp; COMING SOON &nbsp;·&nbsp;
+    </span>
+  </div>
+
+  <main class="flex-1 flex flex-col px-6 md:px-10 pt-10 pb-6">
+
+    <div class="a2">
+      <h1 class="title">WHOL<span>S</span><br>TYLE</h1>
+    </div>
+
+    <div class="a3 mt-auto pt-10 grid grid-cols-1 md:grid-cols-3 gap-0 border-t" style="border-color:#1c1c1c;">
+
+      <div class="md:border-r pb-8 md:pb-0 md:pr-8" style="border-color:#1c1c1c;">
+        <p class="text-xs tracking-widest uppercase mb-5" style="color:var(--mid);">Launching in</p>
+        <div class="flex gap-0">
+          <div class="counter-box mr-px">
+            <div class="counter-num" id="days">00</div>
+            <div class="counter-label">Days</div>
+          </div>
+          <div class="counter-box mr-px">
+            <div class="counter-num" id="hours">00</div>
+            <div class="counter-label">Hrs</div>
+          </div>
+          <div class="counter-box">
+            <div class="counter-num" id="mins">00</div>
+            <div class="counter-label">Min</div>
+          </div>
+        </div>
+      </div>
+
+      <div class="py-8 md:py-0 md:px-8 md:border-r border-t md:border-t-0" style="border-color:#1c1c1c;">
+        <p class="text-xs tracking-widest uppercase mb-5" style="color:var(--mid);">About</p>
+        <p class="text-sm leading-loose" style="color:#888;">
+          Bold. Considered. Unapologetic.<br>
+          A new kind of lifestyle brand<br>
+          built for those who live deliberately.
+        </p>
+        <div class="flex gap-2 mt-6">
+          <a href="#" class="tag">IG</a>
+          <a href="#" class="tag">TW</a>
+          <a href="#" class="tag">PT</a>
+        </div>
+      </div>
+
+      <div class="pt-8 md:pt-0 md:pl-8 border-t md:border-t-0" style="border-color:#1c1c1c;">
+        <p class="text-xs tracking-widest uppercase mb-5" style="color:var(--mid);">Early access</p>
+        <div class="flex">
+          <input class="brutal-input" type="email" placeholder="email@address.com" id="emailInput" />
+          <button class="brutal-btn" onclick="handleNotify()">→</button>
+        </div>
+        <p id="notifyMsg" class="text-xs mt-3 tracking-wider" style="color:var(--acid);display:none;">✓ You're on the list.</p>
+      </div>
+
+    </div>
+
+    <div class="a4 stripe-block mt-6" style="height:20px;"></div>
+
+  </main>
+
+  <footer class="a5 flex justify-between items-center px-6 md:px-10 py-4 border-t" style="border-color:#1c1c1c;">
+    <span class="text-xs tracking-widest" style="color:#333;">© WHOLSTYLE 2025</span>
+    <span class="text-xs font-bold tracking-widest" style="color:#2a2a2a;">WHOLSTYLE™</span>
+  </footer>
+
+  <script>
+    const target = new Date();
+    target.setDate(target.getDate() + 47);
+    target.setHours(0,0,0,0);
+
+    function updateCountdown() {
+      const diff = target - new Date();
+      if (diff <= 0) return;
+      document.getElementById('days').textContent  = String(Math.floor(diff / 864e5)).padStart(2,'0');
+      document.getElementById('hours').textContent = String(Math.floor((diff % 864e5) / 36e5)).padStart(2,'0');
+      document.getElementById('mins').textContent  = String(Math.floor((diff % 36e5) / 6e4)).padStart(2,'0');
+    }
+    updateCountdown();
+    setInterval(updateCountdown, 30000);
+
+    function handleNotify() {
+      const val = document.getElementById('emailInput').value.trim();
+      if (!val || !val.includes('@')) return;
+      document.getElementById('emailInput').value = '';
+      document.getElementById('notifyMsg').style.display = 'block';
+    }
+    document.getElementById('emailInput').addEventListener('keydown', e => {
+      if (e.key === 'Enter') handleNotify();
+    });
+  </script>
+</body>
+</html>
