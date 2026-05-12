@@ -1,186 +1,765 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Wholstyle — Coming Soon</title>
-  <script src="https://cdn.tailwindcss.com"></script>
-  <link href="https://fonts.googleapis.com/css2?family=Space+Mono:ital,wght@0,400;0,700;1,400&family=Bebas+Neue&display=swap" rel="stylesheet" />
-  <style>
-    :root {
-      --ink: #0a0a0a;
-      --paper: #f2f0eb;
-      --acid: #c8f53b;
-      --red: #e8392a;
-      --mid: #888;
-    }
-    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
-    html, body { height: 100%; }
-    body {
-      background: var(--ink);
-      color: var(--paper);
-      font-family: 'Space Mono', monospace;
-      min-height: 100vh;
-      overflow-x: hidden;
-      cursor: crosshair;
-    }
-    body::after {
-      content: '';
-      position: fixed;
-      inset: 0;
-      background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,0.05) 2px, rgba(0,0,0,0.05) 4px);
-      pointer-events: none;
-      z-index: 999;
-    }
-    .title {
-      font-family: 'Bebas Neue', sans-serif;
-      font-size: clamp(5rem, 22vw, 18rem);
-      line-height: 0.88;
-      letter-spacing: -0.01em;
-      color: var(--paper);
-      user-select: none;
-      display: inline-block;
-    }
-    .title span { color: var(--acid); }
-    .title:hover { animation: glitch 0.3s steps(2) infinite; }
-    @keyframes glitch {
-      0%   { text-shadow: 2px 0 var(--red), -2px 0 var(--acid); }
-      25%  { text-shadow: -2px 0 var(--red), 2px 0 var(--acid); }
-      50%  { text-shadow: 2px 2px var(--red), -2px -2px var(--acid); }
-      75%  { text-shadow: none; }
-      100% { text-shadow: -2px 0 var(--red), 2px 0 var(--acid); }
-    }
-    .ticker-wrap { overflow: hidden; border-top: 1px solid #222; border-bottom: 1px solid #222; padding: 10px 0; white-space: nowrap; }
-    .ticker { display: inline-block; animation: ticker 18s linear infinite; font-size: 0.7rem; letter-spacing: 0.2em; color: var(--mid); text-transform: uppercase; }
-    @keyframes ticker { from { transform: translateX(0); } to { transform: translateX(-50%); } }
-    .counter-box { border: 1px solid #222; padding: 1.2rem 1.5rem; }
-    .counter-num { font-family: 'Bebas Neue', sans-serif; font-size: clamp(2rem, 7vw, 4.5rem); color: var(--acid); line-height: 1; }
-    .counter-label { font-size: 0.55rem; letter-spacing: 0.25em; text-transform: uppercase; color: var(--mid); margin-top: 4px; }
-    .brutal-input { background: transparent; border: 1px solid #333; color: var(--paper); font-family: 'Space Mono', monospace; font-size: 0.78rem; letter-spacing: 0.05em; padding: 13px 14px; outline: none; width: 100%; transition: border-color 0.2s; }
-    .brutal-input::placeholder { color: #444; }
-    .brutal-input:focus { border-color: var(--acid); }
-    .brutal-btn { background: var(--acid); color: var(--ink); font-family: 'Space Mono', monospace; font-size: 0.8rem; font-weight: 700; padding: 13px 20px; border: none; cursor: crosshair; white-space: nowrap; transition: background 0.15s, transform 0.1s; }
-    .brutal-btn:hover { background: #d6ff40; transform: translate(-1px,-1px); }
-    .brutal-btn:active { transform: translate(0,0); }
-    .tag { display: inline-block; border: 1px solid #2a2a2a; color: var(--mid); font-size: 0.58rem; letter-spacing: 0.2em; text-transform: uppercase; padding: 4px 10px; }
-    .tag:hover { border-color: #555; }
-    @keyframes fadeUp { from { opacity: 0; transform: translateY(22px); } to { opacity: 1; transform: translateY(0); } }
-    .a1 { animation: fadeUp 0.7s ease 0.05s both; }
-    .a2 { animation: fadeUp 0.7s ease 0.2s both; }
-    .a3 { animation: fadeUp 0.7s ease 0.4s both; }
-    .a4 { animation: fadeUp 0.7s ease 0.55s both; }
-    .a5 { animation: fadeUp 0.7s ease 0.7s both; }
-    @keyframes blink { 50% { opacity: 0; } }
-    .dot { animation: blink 1.2s step-start infinite; display: inline-block; width: 8px; height: 8px; border-radius: 50%; background: var(--red); }
-    .stripe-block { background: repeating-linear-gradient(45deg, #181818, #181818 3px, transparent 3px, transparent 10px); }
-  </style>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>WHOLSTYLE — Wholesale Fashion Markets</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500;600&family=Bebas+Neue&display=swap" rel="stylesheet" />
+
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        brand: '#00C853',
+        brandDark: '#009624',
+        ink: '#0A0A0A',
+        ash: '#F5F5F3',
+        muted: '#9E9E9E',
+        surface: '#FFFFFF',
+        overlay: 'rgba(10,10,10,0.06)',
+      },
+      fontFamily: {
+        display: ['Playfair Display', 'serif'],
+        body: ['DM Sans', 'sans-serif'],
+        label: ['Bebas Neue', 'sans-serif'],
+      },
+    },
+  },
+}
+</script>
+
+<style>
+  * { box-sizing: border-box; }
+  html { scroll-behavior: smooth; }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: #F5F5F3;
+    color: #0A0A0A;
+    overscroll-behavior: none;
+    padding-bottom: 80px;
+  }
+
+  /* Scrollbar hide */
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+  /* Animations */
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(16px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  @keyframes pulse-dot {
+    0%, 100% { opacity: 1; }
+    50%       { opacity: 0.2; }
+  }
+  @keyframes shimmer {
+    0%   { background-position: -400px 0; }
+    100% { background-position: 400px 0; }
+  }
+
+  .fade-up { animation: fadeUp 0.55s cubic-bezier(.22,1,.36,1) both; }
+  .fade-up-1 { animation-delay: 0.05s; }
+  .fade-up-2 { animation-delay: 0.12s; }
+  .fade-up-3 { animation-delay: 0.19s; }
+  .fade-up-4 { animation-delay: 0.26s; }
+
+  .live-dot {
+    width: 8px; height: 8px;
+    background: #FF3D3D;
+    border-radius: 50%;
+    animation: pulse-dot 1.4s ease-in-out infinite;
+  }
+
+  /* Skeleton shimmer */
+  .skeleton {
+    background: linear-gradient(90deg, #E8E8E6 25%, #F0F0EE 50%, #E8E8E6 75%);
+    background-size: 400px 100%;
+    animation: shimmer 1.4s infinite;
+    border-radius: 10px;
+  }
+
+  /* Brand card */
+  .brand-card {
+    border: 1.5px solid #E0E0DE;
+    transition: border-color 0.2s, transform 0.2s, box-shadow 0.2s;
+  }
+  .brand-card:hover {
+    border-color: #00C853;
+    transform: translateY(-2px);
+    box-shadow: 0 8px 24px rgba(0,200,83,0.12);
+  }
+
+  /* Product card */
+  .product-card {
+    transition: transform 0.22s cubic-bezier(.22,1,.36,1), box-shadow 0.22s;
+  }
+  .product-card:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 12px 32px rgba(0,0,0,0.10);
+  }
+
+  /* Category pill */
+  .cat-card {
+    transition: transform 0.2s, box-shadow 0.2s;
+  }
+  .cat-card:hover {
+    transform: scale(1.03);
+    box-shadow: 0 8px 20px rgba(0,0,0,0.09);
+  }
+
+  /* Market button */
+  .market-btn {
+    border: 1.5px solid #E0E0DE;
+    transition: background 0.18s, border-color 0.18s, color 0.18s;
+  }
+  .market-btn:hover {
+    background: #0A0A0A;
+    border-color: #0A0A0A;
+    color: #fff;
+  }
+
+  /* Nav active */
+  .nav-item.active .nav-icon { color: #00C853; }
+  .nav-item.active .nav-label { color: #00C853; font-weight: 600; }
+
+  /* Navbar backdrop */
+  .top-nav {
+    background: rgba(245,245,243,0.88);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(0,0,0,0.07);
+  }
+
+  /* Bottom nav */
+  .bottom-nav {
+    background: rgba(245,245,243,0.92);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-top: 1px solid rgba(0,0,0,0.07);
+  }
+
+  /* Store card highlight */
+  .store-card-featured {
+    background: #fff;
+    border: 1.5px solid #E0E0DE;
+    border-radius: 16px;
+    overflow: hidden;
+    flex-shrink: 0;
+    transition: box-shadow 0.2s;
+  }
+  .store-card-featured:hover {
+    box-shadow: 0 10px 30px rgba(0,0,0,0.09);
+  }
+
+  /* Banner */
+  .ad-banner {
+    background: linear-gradient(135deg, #0A0A0A 0%, #1A1A1A 60%, #00C853 200%);
+    border-radius: 18px;
+    position: relative;
+    overflow: hidden;
+  }
+  .ad-banner::before {
+    content: '';
+    position: absolute;
+    top: -40%;
+    right: -10%;
+    width: 60%;
+    height: 200%;
+    background: radial-gradient(circle, rgba(0,200,83,0.18) 0%, transparent 70%);
+    pointer-events: none;
+  }
+
+  /* Section title */
+  .section-title {
+    font-family: 'Playfair Display', serif;
+    font-weight: 900;
+    letter-spacing: -0.5px;
+    line-height: 1.05;
+  }
+
+  .tag-pill {
+    font-family: 'DM Sans', sans-serif;
+    font-size: 11px;
+    font-weight: 500;
+    color: #9E9E9E;
+    letter-spacing: 0.03em;
+  }
+
+  .stock-badge {
+    background: #00C853;
+    color: #fff;
+    font-size: 9px;
+    font-weight: 700;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 2px 6px;
+    border-radius: 4px;
+  }
+
+  /* Product image placeholders styled green */
+  .prod-img-green {
+    background: #00C853;
+    border-radius: 10px;
+  }
+</style>
 </head>
-<body class="flex flex-col min-h-screen">
 
-  <nav class="a1 flex justify-between items-center px-6 md:px-10 py-5 border-b" style="border-color:#1c1c1c;">
-    <div class="flex items-center gap-2">
-      <span class="dot"></span>
-      <span class="text-xs tracking-widest uppercase" style="color:var(--mid);">Loading</span>
-    </div>
-    <div class="flex gap-1">
-      <span class="tag">2025</span>
-      <span class="tag">Lifestyle</span>
-    </div>
-  </nav>
+<body>
 
-  <div class="a1 ticker-wrap">
-    <span class="ticker">
-      WHOLSTYLE &nbsp;·&nbsp; COMING SOON &nbsp;·&nbsp; WHOLSTYLE &nbsp;·&nbsp; COMING SOON &nbsp;·&nbsp;
-      WHOLSTYLE &nbsp;·&nbsp; COMING SOON &nbsp;·&nbsp; WHOLSTYLE &nbsp;·&nbsp; COMING SOON &nbsp;·&nbsp;
-      WHOLSTYLE &nbsp;·&nbsp; COMING SOON &nbsp;·&nbsp; WHOLSTYLE &nbsp;·&nbsp; COMING SOON &nbsp;·&nbsp;
-      WHOLSTYLE &nbsp;·&nbsp; COMING SOON &nbsp;·&nbsp; WHOLSTYLE &nbsp;·&nbsp; COMING SOON &nbsp;·&nbsp;
-    </span>
+<!-- ══════════════════════════════════
+     TOP NAVBAR (modular)
+══════════════════════════════════ -->
+<header id="top-navbar" class="top-nav fixed top-0 left-0 right-0 z-50 max-w-7xl mx-auto w-full">
+  <div class="flex items-center justify-between px-4 md:px-8 py-3">
+
+    <!-- Logo -->
+    <div class="flex items-center gap-2 fade-up fade-up-1">
+      <div class="w-9 h-9 rounded-full bg-ink flex items-center justify-center">
+        <svg width="18" height="18" viewBox="0 0 18 18" fill="none">
+          <rect x="2" y="2" width="6" height="6" fill="#00C853"/>
+          <rect x="10" y="2" width="6" height="6" fill="white"/>
+          <rect x="2" y="10" width="6" height="6" fill="white"/>
+          <rect x="10" y="10" width="6" height="6" fill="#00C853"/>
+        </svg>
+      </div>
+      <div>
+        <div class="font-label text-ink text-[17px] leading-none tracking-wider">WHOLSTYLE</div>
+        <div class="flex items-center gap-1.5 mt-0.5">
+          <div class="live-dot"></div>
+          <span class="text-[9px] text-muted font-body font-medium uppercase tracking-widest">Markets Closed</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Nav Icons -->
+    <div class="flex items-center gap-3 fade-up fade-up-2">
+      <!-- Notifs -->
+      <button class="flex flex-col items-center gap-0.5 relative" aria-label="Notifications">
+        <div class="relative">
+          <svg width="20" height="20" fill="none" stroke="#0A0A0A" stroke-width="1.6" viewBox="0 0 24 24">
+            <path d="M18 8A6 6 0 0 0 6 8c0 7-3 9-3 9h18s-3-2-3-9"/>
+            <path d="M13.73 21a2 2 0 0 1-3.46 0"/>
+          </svg>
+          <span class="absolute -top-1 -right-1 w-3.5 h-3.5 bg-red-500 text-white text-[7px] font-bold flex items-center justify-center rounded-full">3</span>
+        </div>
+        <span class="text-[9px] text-muted">Notifs</span>
+      </button>
+
+      <!-- Chats -->
+      <button class="flex flex-col items-center gap-0.5" aria-label="Chats">
+        <svg width="20" height="20" fill="none" stroke="#0A0A0A" stroke-width="1.6" viewBox="0 0 24 24">
+          <line x1="22" y1="2" x2="11" y2="13"/><polygon points="22 2 15 22 11 13 2 9 22 2"/>
+        </svg>
+        <span class="text-[9px] text-muted">Chats</span>
+      </button>
+
+      <!-- Cart -->
+      <button class="flex flex-col items-center gap-0.5 relative" aria-label="Cart">
+        <div class="relative">
+          <svg width="20" height="20" fill="none" stroke="#0A0A0A" stroke-width="1.6" viewBox="0 0 24 24">
+            <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+            <line x1="3" y1="6" x2="21" y2="6"/>
+            <path d="M16 10a4 4 0 01-8 0"/>
+          </svg>
+          <span class="absolute -top-1 -right-1 w-3.5 h-3.5 bg-brand text-white text-[7px] font-bold flex items-center justify-center rounded-full">2</span>
+        </div>
+        <span class="text-[9px] text-muted">Cart</span>
+      </button>
+
+      <!-- Store QR -->
+      <button class="flex flex-col items-center gap-0.5 bg-ink rounded-xl px-2.5 py-1.5" aria-label="My Store">
+        <svg width="18" height="18" fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="1.8">
+          <rect x="3" y="3" width="7" height="7"/><rect x="14" y="3" width="7" height="7"/>
+          <rect x="3" y="14" width="7" height="7"/>
+          <path d="M14 14h3v3h-3zM17 17h3v3h-3zM14 20h3"/>
+        </svg>
+        <span class="text-[9px] text-white font-medium">Store</span>
+      </button>
+    </div>
   </div>
+</header>
 
-  <main class="flex-1 flex flex-col px-6 md:px-10 pt-10 pb-6">
+<!-- ══════════════════════════════════
+     MAIN CONTENT
+══════════════════════════════════ -->
+<main class="max-w-7xl mx-auto pt-[72px] pb-2">
 
-    <div class="a2">
-      <h1 class="title">WHOL<span>S</span><br>TYLE</h1>
+  <!-- ── TOP BRANDS ── -->
+  <section class="px-4 md:px-8 pt-6 pb-2 fade-up fade-up-2">
+    <div class="flex items-baseline justify-between mb-4">
+      <h2 class="section-title text-[22px] md:text-[28px] lg:text-[32px]">Top brands</h2>
+      <span class="tag-pill md:text-[13px]">click to explore stores →</span>
     </div>
 
-    <div class="a3 mt-auto pt-10 grid grid-cols-1 md:grid-cols-3 gap-0 border-t" style="border-color:#1c1c1c;">
+    <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3 md:gap-4">
+      <!-- Defend -->
+      <button class="brand-card rounded-2xl overflow-hidden h-[72px] md:h-[90px] lg:h-[100px] flex items-center justify-center bg-brand">
+        <span class="font-display italic text-[28px] md:text-[34px] font-bold text-white tracking-tight">Defend</span>
+      </button>
 
-      <div class="md:border-r pb-8 md:pb-0 md:pr-8" style="border-color:#1c1c1c;">
-        <p class="text-xs tracking-widest uppercase mb-5" style="color:var(--mid);">Launching in</p>
-        <div class="flex gap-0">
-          <div class="counter-box mr-px">
-            <div class="counter-num" id="days">00</div>
-            <div class="counter-label">Days</div>
-          </div>
-          <div class="counter-box mr-px">
-            <div class="counter-num" id="hours">00</div>
-            <div class="counter-label">Hrs</div>
-          </div>
-          <div class="counter-box">
-            <div class="counter-num" id="mins">00</div>
-            <div class="counter-label">Min</div>
-          </div>
+      <!-- Barracuda -->
+      <button class="brand-card rounded-2xl overflow-hidden h-[72px] md:h-[90px] lg:h-[100px] flex items-center justify-center bg-ink">
+        <div class="flex items-center gap-1">
+          <span class="font-label text-white text-[22px] md:text-[26px] tracking-[0.1em]">Barracuda</span>
+          <svg width="14" height="18" viewBox="0 0 14 18" fill="white" class="mb-2">
+            <path d="M7 0L14 8H7L4 18L0 4L7 0Z"/>
+          </svg>
+        </div>
+      </button>
+
+      <!-- Placeholders -->
+      <button class="brand-card rounded-2xl overflow-hidden h-[72px] md:h-[90px] lg:h-[100px] skeleton"></button>
+      <button class="brand-card rounded-2xl overflow-hidden h-[72px] md:h-[90px] lg:h-[100px] skeleton"></button>
+      <button class="brand-card rounded-2xl overflow-hidden h-[72px] md:h-[90px] lg:h-[100px] skeleton"></button>
+      <button class="brand-card rounded-2xl overflow-hidden h-[72px] md:h-[90px] lg:h-[100px] skeleton"></button>
+      <button class="brand-card rounded-2xl overflow-hidden h-[72px] md:h-[90px] lg:h-[100px] skeleton"></button>
+      <button class="brand-card rounded-2xl overflow-hidden h-[72px] md:h-[90px] lg:h-[100px] skeleton"></button>
+    </div>
+  </section>
+
+  <!-- ── AD BANNER ── -->
+  <section class="px-4 md:px-8 py-5 fade-up fade-up-3">
+    <div class="ad-banner p-5 md:p-8 min-h-[160px] md:min-h-[220px] flex flex-col justify-between">
+      <div class="flex justify-between items-start">
+        <div>
+          <div class="text-[10px] text-brand font-label tracking-[0.2em] mb-1">FEATURED PARTNER</div>
+          <div class="text-white font-display text-[26px] md:text-[36px] lg:text-[42px] font-bold leading-tight">New Season<br/>Drop 2026</div>
+          <p class="text-white/50 text-xs md:text-sm font-body mt-1.5 max-w-[180px] md:max-w-[320px]">Exclusive wholesale pricing for verified retailers.</p>
+        </div>
+        <div class="bg-brand rounded-xl p-3 flex items-center justify-center">
+          <svg width="28" height="28" fill="white" viewBox="0 0 24 24"><path d="M13 2L3 14h9l-1 8 10-12h-9l1-8z"/></svg>
+        </div>
+      </div>
+      <div class="flex items-center gap-3 mt-5">
+        <button class="bg-brand text-ink text-xs font-semibold px-5 py-2.5 rounded-full font-body">Shop Now</button>
+        <span class="text-white/40 text-[10px] font-body">Ad · Store Premium</span>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FOR YOUR STORE ── -->
+  <section class="py-3 md:py-6 fade-up fade-up-4">
+    <div class="flex items-baseline justify-between px-4 md:px-8 mb-4">
+      <h2 class="section-title text-[22px] md:text-[28px] lg:text-[32px]">For your store</h2>
+      <span class="tag-pill">Based on your search</span>
+    </div>
+
+    <div class="flex md:grid md:grid-cols-3 lg:grid-cols-5 gap-3 px-4 md:px-8 overflow-x-auto md:overflow-x-visible no-scrollbar pb-2">
+      <!-- Category cards -->
+      <div class="cat-card flex-shrink-0 w-[130px] md:w-auto rounded-2xl overflow-hidden bg-white border border-[#E0E0DE] cursor-pointer">
+        <div class="skeleton h-[130px] md:h-[160px] rounded-none rounded-t-2xl"
+             style="background:linear-gradient(145deg,#e8f5e9,#c8e6c9);animation:none;"></div>
+        <div class="p-2.5">
+          <div class="text-[12px] md:text-[14px] font-semibold text-ink">Shirts</div>
+          <div class="text-[10px] md:text-[12px] text-muted mt-0.5">842 items</div>
         </div>
       </div>
 
-      <div class="py-8 md:py-0 md:px-8 md:border-r border-t md:border-t-0" style="border-color:#1c1c1c;">
-        <p class="text-xs tracking-widest uppercase mb-5" style="color:var(--mid);">About</p>
-        <p class="text-sm leading-loose" style="color:#888;">
-          Bold. Considered. Unapologetic.<br>
-          A new kind of lifestyle brand<br>
-          built for those who live deliberately.
-        </p>
-        <div class="flex gap-2 mt-6">
-          <a href="#" class="tag">IG</a>
-          <a href="#" class="tag">TW</a>
-          <a href="#" class="tag">PT</a>
+      <div class="cat-card flex-shrink-0 w-[130px] md:w-auto rounded-2xl overflow-hidden bg-white border border-[#E0E0DE] cursor-pointer">
+        <div class="h-[130px] md:h-[160px] rounded-none rounded-t-2xl"
+             style="background:linear-gradient(145deg,#e3f2fd,#bbdefb);animation:none;"></div>
+        <div class="p-2.5">
+          <div class="text-[12px] md:text-[14px] font-semibold text-ink">Jeans</div>
+          <div class="text-[10px] md:text-[12px] text-muted mt-0.5">1.2k items</div>
         </div>
       </div>
 
-      <div class="pt-8 md:pt-0 md:pl-8 border-t md:border-t-0" style="border-color:#1c1c1c;">
-        <p class="text-xs tracking-widest uppercase mb-5" style="color:var(--mid);">Early access</p>
-        <div class="flex">
-          <input class="brutal-input" type="email" placeholder="email@address.com" id="emailInput" />
-          <button class="brutal-btn" onclick="handleNotify()">→</button>
+      <div class="cat-card flex-shrink-0 w-[130px] md:w-auto rounded-2xl overflow-hidden bg-white border border-[#E0E0DE] cursor-pointer">
+        <div class="h-[130px] md:h-[160px] rounded-none rounded-t-2xl"
+             style="background:linear-gradient(145deg,#fce4ec,#f8bbd0);animation:none;"></div>
+        <div class="p-2.5">
+          <div class="text-[12px] md:text-[14px] font-semibold text-ink">T-Shirts</div>
+          <div class="text-[10px] md:text-[12px] text-muted mt-0.5">2.4k items</div>
         </div>
-        <p id="notifyMsg" class="text-xs mt-3 tracking-wider" style="color:var(--acid);display:none;">✓ You're on the list.</p>
+      </div>
+
+      <div class="cat-card flex-shrink-0 w-[130px] md:w-auto rounded-2xl overflow-hidden bg-white border border-[#E0E0DE] cursor-pointer">
+        <div class="h-[130px] md:h-[160px] rounded-none rounded-t-2xl"
+             style="background:linear-gradient(145deg,#fff8e1,#ffecb3);animation:none;"></div>
+        <div class="p-2.5">
+          <div class="text-[12px] md:text-[14px] font-semibold text-ink">Sneakers</div>
+          <div class="text-[10px] md:text-[12px] text-muted mt-0.5">390 items</div>
+        </div>
+      </div>
+
+      <div class="cat-card flex-shrink-0 w-[130px] md:w-auto rounded-2xl overflow-hidden bg-white border border-[#E0E0DE] cursor-pointer">
+        <div class="h-[130px] md:h-[160px] rounded-none rounded-t-2xl"
+             style="background:linear-gradient(145deg,#f3e5f5,#e1bee7);animation:none;"></div>
+        <div class="p-2.5">
+          <div class="text-[12px] md:text-[14px] font-semibold text-ink">Trousers</div>
+          <div class="text-[10px] md:text-[12px] text-muted mt-0.5">670 items</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── GAME CHANGERS ── -->
+  <section class="px-4 md:px-8 py-3 md:py-6 fade-up">
+    <div class="flex items-baseline justify-between mb-4">
+      <h2 class="section-title text-[22px] md:text-[28px] lg:text-[32px]">Game changers</h2>
+      <span class="tag-pill">Met-gala design inspirations</span>
+    </div>
+
+    <div class="flex md:grid md:grid-cols-3 gap-3 overflow-x-auto md:overflow-x-visible no-scrollbar pb-1">
+      <div class="product-card flex-shrink-0 w-[165px] md:w-auto rounded-2xl overflow-hidden bg-white border border-[#E0E0DE] cursor-pointer">
+        <div class="h-[200px] md:h-[260px] relative"
+             style="background:linear-gradient(160deg,#0A0A0A 0%,#1c1c1c 100%);">
+          <div class="absolute inset-0 flex items-center justify-center opacity-10">
+            <div class="font-display text-white text-[64px] font-black">M</div>
+          </div>
+          <div class="absolute top-2 left-2"><span class="stock-badge">Trending</span></div>
+        </div>
+        <div class="p-3">
+          <div class="text-[11px] md:text-[13px] font-semibold text-ink leading-snug">Noir Couture Jacket</div>
+          <div class="text-[10px] md:text-[12px] text-muted mt-0.5">MOQ 10 pcs</div>
+          <div class="text-[12px] md:text-[14px] font-bold text-brand mt-1">₹2,800<span class="text-muted font-normal text-[10px]">/pc</span></div>
+        </div>
+      </div>
+
+      <div class="product-card flex-shrink-0 w-[165px] md:w-auto rounded-2xl overflow-hidden bg-white border border-[#E0E0DE] cursor-pointer">
+        <div class="h-[200px] md:h-[260px] relative"
+             style="background:linear-gradient(160deg,#1a0030 0%,#4a0080 100%);">
+          <div class="absolute top-2 left-2"><span class="stock-badge">New</span></div>
+        </div>
+        <div class="p-3">
+          <div class="text-[11px] md:text-[13px] font-semibold text-ink leading-snug">Velvet Palazzo Set</div>
+          <div class="text-[10px] md:text-[12px] text-muted mt-0.5">MOQ 6 pcs</div>
+          <div class="text-[12px] md:text-[14px] font-bold text-brand mt-1">₹4,200<span class="text-muted font-normal text-[10px]">/pc</span></div>
+        </div>
+      </div>
+
+      <div class="product-card flex-shrink-0 w-[165px] md:w-auto rounded-2xl overflow-hidden bg-white border border-[#E0E0DE] cursor-pointer">
+        <div class="h-[200px] md:h-[260px] relative"
+             style="background:linear-gradient(160deg,#002a1a 0%,#00C853 200%);">
+          <div class="absolute top-2 left-2"><span class="stock-badge">Hot</span></div>
+        </div>
+        <div class="p-3">
+          <div class="text-[11px] md:text-[13px] font-semibold text-ink leading-snug">Emerald Silk Coord</div>
+          <div class="text-[10px] md:text-[12px] text-muted mt-0.5">MOQ 12 pcs</div>
+          <div class="text-[12px] md:text-[14px] font-bold text-brand mt-1">₹3,100<span class="text-muted font-normal text-[10px]">/pc</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ── FEATURED STORES ── -->
+  <section class="py-5 fade-up">
+    <div class="flex items-baseline justify-between px-4 md:px-8 mb-4">
+      <h2 class="section-title text-[22px] md:text-[28px] lg:text-[32px]">Featured stores</h2>
+      <span class="tag-pill text-red-500 font-semibold">Stocks in high demand ↑</span>
+    </div>
+
+    <div class="flex md:grid md:grid-cols-2 gap-3 md:gap-4 px-4 md:px-8 overflow-x-auto md:overflow-x-visible no-scrollbar pb-2">
+
+      <!-- Store Card: Game -->
+      <div class="store-card-featured w-[260px] md:w-auto p-3 md:p-5">
+        <div class="flex items-center gap-2 mb-3">
+          <div class="w-6 h-6 rounded-full bg-brand flex-shrink-0"></div>
+          <div>
+            <div class="text-[13px] font-semibold text-ink">Game</div>
+            <div class="text-[10px] text-muted">MOQ 5 sets</div>
+          </div>
+        </div>
+        <div class="grid grid-cols-5 gap-1.5">
+          <div class="prod-img-green aspect-square"></div>
+          <div class="prod-img-green aspect-square"></div>
+          <div class="prod-img-green aspect-square"></div>
+          <div class="prod-img-green aspect-square"></div>
+          <div class="prod-img-green aspect-square"></div>
+          <div class="prod-img-green aspect-square"></div>
+          <div class="prod-img-green aspect-square"></div>
+          <div class="prod-img-green aspect-square"></div>
+          <div class="prod-img-green aspect-square"></div>
+          <div class="prod-img-green aspect-square"></div>
+        </div>
+        <button class="mt-3 w-full border border-ink rounded-full py-1.5 text-[11px] font-semibold text-ink font-body hover:bg-ink hover:text-white transition-colors">
+          Visit Store →
+        </button>
+      </div>
+
+      <!-- Store Card: KASAY -->
+      <div class="store-card-featured w-[260px] md:w-auto p-3 md:p-5">
+        <div class="flex items-center gap-2 mb-3">
+          <div class="w-6 h-6 rounded-full bg-ink flex-shrink-0"></div>
+          <div>
+            <div class="font-label text-ink text-[15px] tracking-[0.18em]">KASAY</div>
+            <div class="text-[10px] text-muted">MOQ 3 sets</div>
+          </div>
+        </div>
+        <div class="grid grid-cols-5 gap-1.5">
+          <div class="prod-img-green aspect-square"></div>
+          <div class="prod-img-green aspect-square"></div>
+          <div class="prod-img-green aspect-square opacity-70"></div>
+          <div class="prod-img-green aspect-square opacity-50"></div>
+          <div class="prod-img-green aspect-square opacity-30"></div>
+          <div class="prod-img-green aspect-square opacity-80"></div>
+          <div class="prod-img-green aspect-square opacity-60"></div>
+          <div class="prod-img-green aspect-square opacity-40"></div>
+          <div class="prod-img-green aspect-square opacity-20"></div>
+          <div class="prod-img-green aspect-square opacity-70"></div>
+        </div>
+        <button class="mt-3 w-full border border-ink rounded-full py-1.5 text-[11px] font-semibold text-ink font-body hover:bg-ink hover:text-white transition-colors">
+          Visit Store →
+        </button>
       </div>
 
     </div>
+  </section>
 
-    <div class="a4 stripe-block mt-6" style="height:20px;"></div>
+  <!-- ── FOLLOW THE TREND ── -->
+  <section class="px-4 md:px-8 py-3 md:py-6 fade-up">
+    <div class="flex items-baseline justify-between mb-4">
+      <h2 class="section-title text-[22px] md:text-[28px] lg:text-[32px]">Follow the trend</h2>
+      <span class="tag-pill">Top selling products</span>
+    </div>
 
-  </main>
+    <div class="flex md:grid md:grid-cols-3 gap-3 overflow-x-auto md:overflow-x-visible no-scrollbar pb-1">
+      <div class="product-card flex-shrink-0 w-[200px] md:w-auto rounded-2xl overflow-hidden bg-white border border-[#E0E0DE]">
+        <div class="skeleton h-[230px] rounded-none rounded-t-2xl"></div>
+        <div class="p-3">
+          <div class="text-[11px] font-semibold text-ink">Summer Linen Set</div>
+          <div class="flex justify-between items-center mt-1">
+            <div class="text-[12px] font-bold text-ink">₹1,400<span class="text-muted text-[9px] font-normal">/pc</span></div>
+            <span class="text-[9px] text-muted">MOQ 8</span>
+          </div>
+        </div>
+      </div>
 
-  <footer class="a5 flex justify-between items-center px-6 md:px-10 py-4 border-t" style="border-color:#1c1c1c;">
-    <span class="text-xs tracking-widest" style="color:#333;">© WHOLSTYLE 2025</span>
-    <span class="text-xs font-bold tracking-widest" style="color:#2a2a2a;">WHOLSTYLE™</span>
-  </footer>
+      <div class="product-card flex-shrink-0 w-[200px] md:w-auto rounded-2xl overflow-hidden bg-white border border-[#E0E0DE]">
+        <div class="skeleton h-[230px] rounded-none rounded-t-2xl"></div>
+        <div class="p-3">
+          <div class="text-[11px] font-semibold text-ink">Cargo Joggers Co-ord</div>
+          <div class="flex justify-between items-center mt-1">
+            <div class="text-[12px] font-bold text-ink">₹980<span class="text-muted text-[9px] font-normal">/pc</span></div>
+            <span class="text-[9px] text-muted">MOQ 12</span>
+          </div>
+        </div>
+      </div>
 
-  <script>
-    const target = new Date();
-    target.setDate(target.getDate() + 47);
-    target.setHours(0,0,0,0);
+      <div class="product-card flex-shrink-0 w-[200px] md:w-auto rounded-2xl overflow-hidden bg-white border border-[#E0E0DE]">
+        <div class="skeleton h-[230px] rounded-none rounded-t-2xl"></div>
+        <div class="p-3">
+          <div class="text-[11px] font-semibold text-ink">Floral Printed Kurta</div>
+          <div class="flex justify-between items-center mt-1">
+            <div class="text-[12px] font-bold text-ink">₹750<span class="text-muted text-[9px] font-normal">/pc</span></div>
+            <span class="text-[9px] text-muted">MOQ 20</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
 
-    function updateCountdown() {
-      const diff = target - new Date();
-      if (diff <= 0) return;
-      document.getElementById('days').textContent  = String(Math.floor(diff / 864e5)).padStart(2,'0');
-      document.getElementById('hours').textContent = String(Math.floor((diff % 864e5) / 36e5)).padStart(2,'0');
-      document.getElementById('mins').textContent  = String(Math.floor((diff % 36e5) / 6e4)).padStart(2,'0');
-    }
-    updateCountdown();
-    setInterval(updateCountdown, 30000);
+  <!-- ── EXPLORE MARKETS ── -->
+  <section class="px-4 md:px-8 py-5 md:py-8 fade-up">
+    <h2 class="section-title text-[22px] md:text-[28px] lg:text-[32px] mb-1">Explore markets</h2>
+    <p class="tag-pill mb-4">Discover wholesale hubs near you</p>
 
-    function handleNotify() {
-      const val = document.getElementById('emailInput').value.trim();
-      if (!val || !val.includes('@')) return;
-      document.getElementById('emailInput').value = '';
-      document.getElementById('notifyMsg').style.display = 'block';
-    }
-    document.getElementById('emailInput').addEventListener('keydown', e => {
-      if (e.key === 'Enter') handleNotify();
+    <div class="flex flex-col md:grid md:grid-cols-2 gap-2.5 md:gap-3">
+      <button class="market-btn rounded-2xl px-5 py-4 flex items-center justify-between w-full group">
+        <div class="flex items-center gap-3">
+          <div class="w-8 h-8 rounded-full bg-brand/10 flex items-center justify-center group-hover:bg-white/10 transition-colors">
+            <svg width="16" height="16" fill="none" stroke="#00C853" stroke-width="2" viewBox="0 0 24 24">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/>
+            </svg>
+          </div>
+          <div class="text-left">
+            <div class="text-[13px] font-semibold text-ink group-hover:text-white transition-colors">Calicut Markets</div>
+            <div class="text-[10px] text-muted group-hover:text-white/60 transition-colors">Kerala's fashion hub</div>
+          </div>
+        </div>
+        <svg width="16" height="16" stroke="currentColor" stroke-width="2" fill="none" viewBox="0 0 24 24" class="text-muted group-hover:text-white transition-colors">
+          <polyline points="9 18 15 12 9 6"/>
+        </svg>
+      </button>
+
+      <button class="market-btn rounded-2xl px-5 py-4 flex items-center justify-between w-full group">
+        <div class="flex items-center gap-3">
+          <div class="w-8 h-8 rounded-full bg-brand/10 flex items-center justify-center group-hover:bg-white/10 transition-colors">
+            <svg width="16" height="16" fill="none" stroke="#00C853" stroke-width="2" viewBox="0 0 24 24">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/>
+            </svg>
+          </div>
+          <div class="text-left">
+            <div class="text-[13px] font-semibold text-ink group-hover:text-white transition-colors">Bangalore Markets</div>
+            <div class="text-[10px] text-muted group-hover:text-white/60 transition-colors">Silk & tech wear</div>
+          </div>
+        </div>
+        <svg width="16" height="16" stroke="currentColor" stroke-width="2" fill="none" viewBox="0 0 24 24" class="text-muted group-hover:text-white transition-colors">
+          <polyline points="9 18 15 12 9 6"/>
+        </svg>
+      </button>
+
+      <button class="market-btn rounded-2xl px-5 py-4 flex items-center justify-between w-full group">
+        <div class="flex items-center gap-3">
+          <div class="w-8 h-8 rounded-full bg-brand/10 flex items-center justify-center group-hover:bg-white/10 transition-colors">
+            <svg width="16" height="16" fill="none" stroke="#00C853" stroke-width="2" viewBox="0 0 24 24">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/>
+            </svg>
+          </div>
+          <div class="text-left">
+            <div class="text-[13px] font-semibold text-ink group-hover:text-white transition-colors">Surat Markets</div>
+            <div class="text-[10px] text-muted group-hover:text-white/60 transition-colors">Diamond of textiles</div>
+          </div>
+        </div>
+        <svg width="16" height="16" stroke="currentColor" stroke-width="2" fill="none" viewBox="0 0 24 24" class="text-muted group-hover:text-white transition-colors">
+          <polyline points="9 18 15 12 9 6"/>
+        </svg>
+      </button>
+
+      <button class="market-btn rounded-2xl px-5 py-4 flex items-center justify-between w-full group">
+        <div class="flex items-center gap-3">
+          <div class="w-8 h-8 rounded-full bg-brand/10 flex items-center justify-center group-hover:bg-white/10 transition-colors">
+            <svg width="16" height="16" fill="none" stroke="#00C853" stroke-width="2" viewBox="0 0 24 24">
+              <path d="M21 10c0 7-9 13-9 13s-9-6-9-13a9 9 0 0118 0z"/><circle cx="12" cy="10" r="3"/>
+            </svg>
+          </div>
+          <div class="text-left">
+            <div class="text-[13px] font-semibold text-ink group-hover:text-white transition-colors">Mumbai Markets</div>
+            <div class="text-[10px] text-muted group-hover:text-white/60 transition-colors">Fashion capital of India</div>
+          </div>
+        </div>
+        <svg width="16" height="16" stroke="currentColor" stroke-width="2" fill="none" viewBox="0 0 24 24" class="text-muted group-hover:text-white transition-colors">
+          <polyline points="9 18 15 12 9 6"/>
+        </svg>
+      </button>
+    </div>
+  </section>
+
+  <!-- ── ASSORTED STOCKS ── -->
+  <section class="py-3 md:py-6 fade-up">
+    <div class="flex items-baseline justify-between px-4 md:px-8 mb-4">
+      <h2 class="section-title text-[22px] md:text-[28px] lg:text-[32px]">Assorted Stocks</h2>
+      <span class="tag-pill text-amber-500 font-semibold">available for bid</span>
+    </div>
+
+    <div class="flex md:grid md:grid-cols-3 gap-3 px-4 md:px-8 overflow-x-auto md:overflow-x-visible no-scrollbar pb-2">
+      <div class="product-card flex-shrink-0 w-[155px] md:w-auto rounded-2xl overflow-hidden bg-white border border-[#E0E0DE] cursor-pointer">
+        <div class="skeleton h-[170px] rounded-none rounded-t-2xl"></div>
+        <div class="p-3">
+          <div class="text-[11px] font-semibold text-ink">Mixed Lot A</div>
+          <div class="flex items-center gap-1 mt-1">
+            <div class="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse"></div>
+            <span class="text-[10px] text-amber-500 font-medium">Bidding open</span>
+          </div>
+          <div class="text-[12px] font-bold text-ink mt-1">Starts ₹12,000</div>
+        </div>
+      </div>
+
+      <div class="product-card flex-shrink-0 w-[155px] md:w-auto rounded-2xl overflow-hidden bg-white border border-[#E0E0DE] cursor-pointer">
+        <div class="skeleton h-[170px] rounded-none rounded-t-2xl"></div>
+        <div class="p-3">
+          <div class="text-[11px] font-semibold text-ink">Mixed Lot B</div>
+          <div class="flex items-center gap-1 mt-1">
+            <div class="w-1.5 h-1.5 rounded-full bg-amber-400 animate-pulse"></div>
+            <span class="text-[10px] text-amber-500 font-medium">Bidding open</span>
+          </div>
+          <div class="text-[12px] font-bold text-ink mt-1">Starts ₹8,500</div>
+        </div>
+      </div>
+
+      <div class="product-card flex-shrink-0 w-[155px] md:w-auto rounded-2xl overflow-hidden bg-white border border-[#E0E0DE] cursor-pointer">
+        <div class="skeleton h-[170px] rounded-none rounded-t-2xl"></div>
+        <div class="p-3">
+          <div class="text-[11px] font-semibold text-ink">Clearance Lot</div>
+          <div class="flex items-center gap-1 mt-1">
+            <div class="w-1.5 h-1.5 rounded-full bg-red-400 animate-pulse"></div>
+            <span class="text-[10px] text-red-400 font-medium">Closing soon</span>
+          </div>
+          <div class="text-[12px] font-bold text-ink mt-1">Starts ₹5,200</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Bottom spacing -->
+  <div class="h-6"></div>
+</main>
+
+<!-- ══════════════════════════════════
+     FLOATING BOTTOM NAVBAR (modular)
+══════════════════════════════════ -->
+<nav id="bottom-navbar" class="bottom-nav fixed bottom-0 left-0 right-0 z-50 max-w-7xl mx-auto w-full">
+  <div class="flex items-center justify-around px-2 py-3">
+
+    <!-- Home (active) -->
+    <button class="nav-item active flex flex-col items-center gap-1 px-3" onclick="setActive(this)">
+      <div class="nav-icon text-brand">
+        <svg width="22" height="22" fill="currentColor" viewBox="0 0 24 24">
+          <path d="M3 12L12 3l9 9M5 10v10a1 1 0 001 1h4v-5h4v5h4a1 1 0 001-1V10" stroke="currentColor" stroke-width="1.5" fill="none"/>
+          <path d="M10 21V16h4v5" fill="currentColor" stroke="none"/>
+        </svg>
+      </div>
+      <span class="nav-label text-[10px] font-semibold text-brand">Home</span>
+    </button>
+
+    <!-- Search -->
+    <button class="nav-item flex flex-col items-center gap-1 px-3" onclick="setActive(this)">
+      <div class="nav-icon text-muted">
+        <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24">
+          <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+        </svg>
+      </div>
+      <span class="nav-label text-[10px] text-muted">Search</span>
+    </button>
+
+    <!-- Feed -->
+    <button class="nav-item flex flex-col items-center gap-1 px-3" onclick="setActive(this)">
+      <div class="nav-icon text-muted">
+        <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24">
+          <path d="M4 6h16M4 12h16M4 18h16"/>
+        </svg>
+      </div>
+      <span class="nav-label text-[10px] text-muted">Feed</span>
+    </button>
+
+    <!-- Category -->
+    <button class="nav-item flex flex-col items-center gap-1 px-3" onclick="setActive(this)">
+      <div class="nav-icon text-muted">
+        <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24">
+          <rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/>
+          <rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/>
+        </svg>
+      </div>
+      <span class="nav-label text-[10px] text-muted">Category</span>
+    </button>
+
+    <!-- Orders -->
+    <button class="nav-item flex flex-col items-center gap-1 px-3" onclick="setActive(this)">
+      <div class="nav-icon text-muted">
+        <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24">
+          <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/>
+          <rect x="9" y="3" width="6" height="4" rx="1"/>
+          <path d="M9 12h6M9 16h4"/>
+        </svg>
+      </div>
+      <span class="nav-label text-[10px] text-muted">Orders</span>
+    </button>
+
+  </div>
+</nav>
+
+<script>
+  function setActive(el) {
+    document.querySelectorAll('.nav-item').forEach(item => {
+      item.classList.remove('active');
+      item.querySelector('.nav-icon').classList.remove('text-brand');
+      item.querySelector('.nav-icon').classList.add('text-muted');
+      item.querySelector('.nav-label').classList.remove('text-brand', 'font-semibold');
+      item.querySelector('.nav-label').classList.add('text-muted');
     });
-  </script>
+    el.classList.add('active');
+    el.querySelector('.nav-icon').classList.add('text-brand');
+    el.querySelector('.nav-icon').classList.remove('text-muted');
+    el.querySelector('.nav-label').classList.add('text-brand', 'font-semibold');
+    el.querySelector('.nav-label').classList.remove('text-muted');
+  }
+
+  // Stagger fade-ups on load
+  document.querySelectorAll('.fade-up').forEach((el, i) => {
+    el.style.animationDelay = `${i * 0.06}s`;
+  });
+</script>
 </body>
 </html>
