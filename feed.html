@@ -1,0 +1,637 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>WHOLSTYLE — Feed</title>
+<script src="https://cdn.tailwindcss.com"></script>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,400;0,700;0,900;1,400&family=DM+Sans:wght@300;400;500;600&family=Bebas+Neue&display=swap" rel="stylesheet" />
+<script>
+tailwind.config = {
+  theme: {
+    extend: {
+      colors: {
+        brand: '#00C853',
+        brandDark: '#009624',
+        ink: '#0A0A0A',
+        ash: '#F5F5F3',
+        muted: '#9E9E9E',
+        surface: '#FFFFFF',
+        overlay: 'rgba(10,10,10,0.06)',
+        highlight: '#5BB8F5',
+      },
+      fontFamily: {
+        display: ['Playfair Display', 'serif'],
+        body: ['DM Sans', 'sans-serif'],
+        label: ['Bebas Neue', 'sans-serif'],
+      },
+    },
+  },
+}
+</script>
+<style>
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body {
+    font-family: 'DM Sans', sans-serif;
+    background: #F5F5F3;
+    color: #0A0A0A;
+    overscroll-behavior: none;
+    padding-top: 108px;
+    padding-bottom: 80px;
+  }
+  .no-scrollbar::-webkit-scrollbar { display: none; }
+  .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
+
+  @keyframes fadeUp {
+    from { opacity: 0; transform: translateY(14px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+  .fade-up { animation: fadeUp 0.5s cubic-bezier(.22,1,.36,1) both; }
+
+  .top-nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 50;
+    background: rgba(245,245,243,0.95);
+    backdrop-filter: blur(16px);
+    -webkit-backdrop-filter: blur(16px);
+    border-bottom: 1px solid rgba(0,0,0,0.07);
+  }
+
+  /* ── TABS ── */
+  .feed-tab {
+    flex: 1;
+    padding: 10px 12px;
+    border: 1.5px solid #E0E0DE;
+    border-radius: 12px;
+    background: #fff;
+    cursor: pointer;
+    text-align: left;
+    transition: border-color 0.15s, box-shadow 0.15s;
+    min-width: 0;
+  }
+  .feed-tab.active {
+    border-color: #0A0A0A;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+  }
+  .feed-tab-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 14px;
+    letter-spacing: 0.08em;
+    color: #0A0A0A;
+    line-height: 1;
+  }
+  .feed-tab-sub {
+    font-size: 10px;
+    color: #9E9E9E;
+    margin-top: 2px;
+    font-family: 'DM Sans', sans-serif;
+  }
+  .feed-tab-sponsored {
+    font-size: 10px;
+    color: #E53935;
+    font-weight: 600;
+    font-family: 'DM Sans', sans-serif;
+  }
+
+  /* ── FEED CARDS ── */
+  .feed-card {
+    background: #fff;
+    border: 1.5px solid #E0E0DE;
+    border-radius: 18px;
+    overflow: hidden;
+    margin: 0 12px 10px;
+    transition: box-shadow 0.2s;
+  }
+  .feed-card:hover { box-shadow: 0 8px 24px rgba(0,0,0,0.08); }
+
+  /* Store header inside card */
+  .store-header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 10px 12px 8px;
+  }
+  .store-avatar {
+    width: 30px; height: 30px;
+    border-radius: 8px;
+    background: #0A0A0A;
+    display: flex; align-items: center; justify-content: center;
+    flex-shrink: 0;
+  }
+  .store-name {
+    font-size: 13px; font-weight: 600; color: #0A0A0A;
+    font-family: 'DM Sans', sans-serif;
+    line-height: 1.2;
+  }
+  .store-moq-warn {
+    font-size: 10px; color: #E53935; font-weight: 500;
+    font-family: 'DM Sans', sans-serif;
+    margin-top: 1px;
+  }
+  .store-moq-neutral {
+    font-size: 10px; color: #9E9E9E;
+    font-family: 'DM Sans', sans-serif;
+    margin-top: 1px;
+  }
+
+  /* Action buttons */
+  .action-btn {
+    border: 1.5px solid #D0D0CE;
+    border-radius: 8px;
+    padding: 5px 14px;
+    font-size: 12px; font-weight: 600;
+    background: #fff;
+    color: #0A0A0A;
+    cursor: pointer;
+    font-family: 'DM Sans', sans-serif;
+    transition: background 0.15s, border-color 0.15s;
+  }
+  .action-btn:hover { background: #f5f5f3; }
+  .action-btn.primary {
+    background: #0A0A0A; color: #fff; border-color: #0A0A0A;
+  }
+  .action-btn.primary:hover { background: #222; }
+
+  /* Product grid inside card */
+  .prod-grid {
+    display: grid;
+    gap: 4px;
+    padding: 0 10px;
+  }
+  .prod-grid-6  { grid-template-columns: repeat(6, 1fr); }
+  .prod-grid-3  { grid-template-columns: repeat(3, 1fr); }
+
+  /* responsive — on wider screens show more cols */
+  @media (min-width: 640px) {
+    .prod-grid-6  { grid-template-columns: repeat(8, 1fr); }
+    .prod-grid-3  { grid-template-columns: repeat(4, 1fr); }
+  }
+
+  .prod-thumb {
+    aspect-ratio: 3 / 4;
+    border-radius: 10px;
+    background: #00C853;
+    cursor: pointer;
+    transition: transform 0.15s, filter 0.15s;
+    position: relative;
+    overflow: hidden;
+  }
+  .prod-thumb:hover { transform: scale(1.03); filter: brightness(0.92); }
+
+  /* Add to cart overlay on first thumb */
+  .add-cart-overlay {
+    position: absolute;
+    bottom: 0; left: 0; right: 0;
+    background: rgba(0,0,0,0.55);
+    color: #fff;
+    font-size: 8px;
+    font-weight: 600;
+    text-align: center;
+    padding: 4px 2px;
+    font-family: 'DM Sans', sans-serif;
+    line-height: 1.2;
+  }
+
+  /* Pre-order footer */
+  .preorder-bar {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    padding: 8px 12px 10px;
+    border-top: 1px solid #F0F0EE;
+    margin-top: 8px;
+  }
+  .preorder-thumbs {
+    display: flex; gap: 4px;
+  }
+  .preorder-thumb {
+    width: 28px; height: 28px;
+    border-radius: 6px;
+    background: #00C853;
+    flex-shrink: 0;
+  }
+  .preorder-text {
+    font-size: 10px; color: #0A0A0A; font-weight: 600;
+    font-family: 'DM Sans', sans-serif;
+    line-height: 1.3;
+  }
+  .preorder-sub {
+    font-size: 9px; color: #9E9E9E;
+    font-family: 'DM Sans', sans-serif;
+    letter-spacing: 0.03em;
+    text-transform: uppercase;
+  }
+
+  /* Sponsored badge */
+  .sponsored-badge {
+    font-size: 9px;
+    font-weight: 600;
+    color: #9E9E9E;
+    font-family: 'DM Sans', sans-serif;
+    letter-spacing: 0.04em;
+    text-transform: uppercase;
+  }
+
+  /* Split layout: two cards side by side */
+  .split-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 10px;
+    margin: 0 12px 10px;
+  }
+  .split-card {
+    background: #fff;
+    border: 1.5px solid #E0E0DE;
+    border-radius: 18px;
+    overflow: hidden;
+    transition: box-shadow 0.2s;
+  }
+  .split-card:hover { box-shadow: 0 8px 24px rgba(0,0,0,0.08); }
+
+  .bottom-nav {
+    position: fixed; bottom: 0; left: 0; right: 0; z-index: 50;
+    background: rgba(245,245,243,0.95);
+    backdrop-filter: blur(20px);
+    -webkit-backdrop-filter: blur(20px);
+    border-top: 1px solid rgba(0,0,0,0.07);
+    height: 68px;
+    display: flex; align-items: center; justify-content: space-around;
+    padding: 0 8px;
+  }
+  .nav-btn {
+    display: flex; flex-direction: column; align-items: center; gap: 3px;
+    padding: 0 12px; cursor: pointer; background: none; border: none;
+  }
+  .nav-lbl { font-size: 10px; color: #9E9E9E; font-family: 'DM Sans',sans-serif; }
+  .nav-btn.active .nav-lbl { color: #00C853; font-weight: 600; }
+  .nav-ic { color: #9E9E9E; display: flex; }
+  .nav-btn.active .nav-ic { color: #00C853; }
+
+  /* wide layout centering */
+  @media (min-width: 768px) {
+    body { padding-top: 116px; }
+    .top-nav > div { padding-left: 32px; padding-right: 32px; }
+  }
+</style>
+</head>
+<body>
+
+<!-- ══════════════════════════════════
+     TOP NAV
+══════════════════════════════════ -->
+<header id="top-navbar" class="top-nav max-w-7xl mx-auto w-full">
+  <div style="display:flex;align-items:center;justify-content:space-between;padding:12px 14px 8px;">
+    <!-- Title -->
+    <h1 style="font-family:'Playfair Display',serif;font-size:24px;font-weight:900;color:#0A0A0A;letter-spacing:-0.5px;">New drops!</h1>
+
+    <!-- Icons -->
+    <div style="display:flex;align-items:center;gap:16px;">
+      <!-- Search -->
+      <button style="background:none;border:none;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;">
+        <svg width="22" height="22" fill="none" stroke="#0A0A0A" stroke-width="1.6" viewBox="0 0 24 24">
+          <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+        </svg>
+      </button>
+      <!-- Save -->
+      <button style="background:none;border:none;cursor:pointer;display:flex;flex-direction:column;align-items:center;gap:2px;">
+        <svg width="22" height="22" fill="none" stroke="#0A0A0A" stroke-width="1.6" viewBox="0 0 24 24">
+          <path d="M19 21l-7-5-7 5V5a2 2 0 012-2h10a2 2 0 012 2z"/>
+        </svg>
+      </button>
+      <!-- Store -->
+      <button style="background:#0A0A0A;border:none;cursor:pointer;border-radius:10px;padding:6px 10px;display:flex;align-items:center;gap:5px;">
+        <svg width="17" height="17" fill="none" viewBox="0 0 24 24" stroke="white" stroke-width="1.8">
+          <path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/>
+          <line x1="3" y1="6" x2="21" y2="6"/>
+          <path d="M16 10a4 4 0 01-8 0"/>
+        </svg>
+      </button>
+    </div>
+  </div>
+
+  <!-- Tab bar -->
+  <div style="display:flex;gap:8px;padding:0 12px 10px;" id="tabBar">
+    <button class="feed-tab active" onclick="switchTab(this, 'following')">
+      <div class="feed-tab-title">FOLLOWING</div>
+      <div class="feed-tab-sub">Stores you follow</div>
+    </button>
+    <button class="feed-tab" onclick="switchTab(this, 'similar')">
+      <div style="display:flex;align-items:baseline;gap:4px;">
+        <div class="feed-tab-title">SIMILAR STORES</div>
+        <span class="feed-tab-sponsored">[Sponsored]</span>
+      </div>
+      <div class="feed-tab-sub">recommended</div>
+    </button>
+  </div>
+</header>
+
+<!-- ══════════════════════════════════
+     FEED CONTENT
+══════════════════════════════════ -->
+<main class="fade-up max-w-7xl mx-auto w-full md:px-8" id="feedContent">
+
+  <!-- ── CARD 1: Hero store card (full width, 2 rows, pre-order footer) ── -->
+  <div class="feed-card">
+    <!-- Store header -->
+    <div class="store-header">
+      <div style="display:flex;align-items:center;gap:8px;">
+        <div class="store-avatar">
+          <svg width="14" height="14" viewBox="0 0 18 18" fill="none">
+            <rect x="2" y="2" width="6" height="6" fill="#00C853"/>
+            <rect x="10" y="2" width="6" height="6" fill="white"/>
+            <rect x="2" y="10" width="6" height="6" fill="white"/>
+            <rect x="10" y="10" width="6" height="6" fill="#00C853"/>
+          </svg>
+        </div>
+        <div>
+          <div class="store-name">Game</div>
+          <div class="store-moq-warn">Add one more set to meet MOQ of this store</div>
+        </div>
+      </div>
+      <div style="display:flex;gap:6px;">
+        <button class="action-btn">Call</button>
+        <button class="action-btn primary">Chat</button>
+      </div>
+    </div>
+
+    <!-- Product grid: 2 rows of 6 -->
+    <div class="prod-grid prod-grid-6" style="padding-bottom:4px;">
+      <!-- Row 1 -->
+      <div class="prod-thumb" style="background:linear-gradient(145deg,#00C853,#009624);">
+        <div class="add-cart-overlay">Add to cart<br>with details pop up</div>
+      </div>
+      <div class="prod-thumb" style="background:#00C853;"></div>
+      <div class="prod-thumb" style="background:#00b248;"></div>
+      <div class="prod-thumb" style="background:#00C853;"></div>
+      <div class="prod-thumb" style="background:#009624;"></div>
+      <div class="prod-thumb" style="background:#00C853;"></div>
+      <!-- Row 2 -->
+      <div class="prod-thumb" style="background:#007a30;"></div>
+      <div class="prod-thumb" style="background:#00C853;"></div>
+      <div class="prod-thumb" style="background:#00C853;"></div>
+      <div class="prod-thumb" style="background:#00b248;"></div>
+      <div class="prod-thumb" style="background:#00C853;"></div>
+      <div class="prod-thumb" style="background:#009624;"></div>
+    </div>
+
+    <!-- Pre-order footer -->
+    <div class="preorder-bar">
+      <div class="preorder-thumbs">
+        <div class="preorder-thumb" style="background:#00C853;"></div>
+        <div class="preorder-thumb" style="background:#009624;"></div>
+        <div class="preorder-thumb" style="background:#007a30;"></div>
+      </div>
+      <div>
+        <div class="preorder-text">Pre-order in next update</div>
+        <div class="preorder-sub">PRE-PAY TO GET 5% PRICE-CUT</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── CARD 2: Split — Game (left) + Sponsored (right) ── -->
+  <div class="split-row">
+
+    <!-- Left: Game store -->
+    <div class="split-card">
+      <div style="padding:10px 10px 6px;display:flex;align-items:center;gap:7px;">
+        <div class="store-avatar" style="width:24px;height:24px;border-radius:6px;">
+          <svg width="11" height="11" viewBox="0 0 18 18" fill="none">
+            <rect x="2" y="2" width="6" height="6" fill="#00C853"/>
+            <rect x="10" y="2" width="6" height="6" fill="white"/>
+            <rect x="2" y="10" width="6" height="6" fill="white"/>
+            <rect x="10" y="10" width="6" height="6" fill="#00C853"/>
+          </svg>
+        </div>
+        <div>
+          <div class="store-name" style="font-size:12px;">Game</div>
+          <div class="store-moq-neutral">MOQ 5 set</div>
+        </div>
+      </div>
+      <div class="prod-grid prod-grid-3" style="padding-bottom:10px;">
+        <div class="prod-thumb" style="background:#00C853;"></div>
+        <div class="prod-thumb" style="background:#009624;"></div>
+        <div class="prod-thumb" style="background:#00b248;"></div>
+      </div>
+    </div>
+
+    <!-- Right: Sponsored -->
+    <div class="split-card">
+      <div style="padding:10px 10px 6px;display:flex;justify-content:flex-end;">
+        <span class="sponsored-badge">Sponsored</span>
+      </div>
+      <div class="prod-grid prod-grid-3" style="padding-bottom:10px;">
+        <div class="prod-thumb" style="background:#00C853;"></div>
+        <div class="prod-thumb" style="background:#007a30;"></div>
+        <div class="prod-thumb" style="background:#00C853;"></div>
+      </div>
+    </div>
+
+  </div>
+
+  <!-- ── CARD 3: Single wide, 1 row of 6 ── -->
+  <div class="feed-card" style="padding:12px 0 12px;">
+    <div class="prod-grid prod-grid-6">
+      <div class="prod-thumb" style="background:#00C853;"></div>
+      <div class="prod-thumb" style="background:#009624;"></div>
+      <div class="prod-thumb" style="background:#00b248;"></div>
+      <div class="prod-thumb" style="background:#00C853;"></div>
+      <div class="prod-thumb" style="background:#007a30;"></div>
+      <div class="prod-thumb" style="background:#00C853;"></div>
+    </div>
+  </div>
+
+  <!-- ── CARD 4: Double-row store card (6+6) ── -->
+  <div class="feed-card" style="padding:12px 0 12px;">
+    <div class="prod-grid prod-grid-6" style="margin-bottom:4px;">
+      <div class="prod-thumb" style="background:#00C853;"></div>
+      <div class="prod-thumb" style="background:#009624;"></div>
+      <div class="prod-thumb" style="background:#00C853;"></div>
+      <div class="prod-thumb" style="background:#00b248;"></div>
+      <div class="prod-thumb" style="background:#00C853;"></div>
+      <div class="prod-thumb" style="background:#007a30;"></div>
+    </div>
+    <div class="prod-grid prod-grid-6">
+      <div class="prod-thumb" style="background:#009624;"></div>
+      <div class="prod-thumb" style="background:#00C853;"></div>
+      <div class="prod-thumb" style="background:#00b248;"></div>
+      <div class="prod-thumb" style="background:#00C853;"></div>
+      <div class="prod-thumb" style="background:#009624;"></div>
+      <div class="prod-thumb" style="background:#00C853;"></div>
+    </div>
+  </div>
+
+  <!-- ── CARD 5: Split — two stores 3+3 ── -->
+  <div class="split-row">
+    <div class="split-card">
+      <div style="padding:10px 10px 6px;">
+        <div class="store-name" style="font-size:12px;">Kasay</div>
+        <div class="store-moq-neutral">MOQ 3 set</div>
+      </div>
+      <div class="prod-grid prod-grid-3" style="padding-bottom:10px;">
+        <div class="prod-thumb" style="background:#00C853;"></div>
+        <div class="prod-thumb" style="background:#009624;"></div>
+        <div class="prod-thumb" style="background:#00C853;"></div>
+      </div>
+    </div>
+    <div class="split-card">
+      <div style="padding:10px 10px 6px;display:flex;justify-content:flex-end;">
+        <span class="sponsored-badge">Sponsored</span>
+      </div>
+      <div class="prod-grid prod-grid-3" style="padding-bottom:10px;">
+        <div class="prod-thumb" style="background:#007a30;"></div>
+        <div class="prod-thumb" style="background:#00C853;"></div>
+        <div class="prod-thumb" style="background:#00b248;"></div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ── CARD 6: Another hero card ── -->
+  <div class="feed-card">
+    <div class="store-header">
+      <div style="display:flex;align-items:center;gap:8px;">
+        <div class="store-avatar" style="background:#1a1a1a;">
+          <svg width="14" height="14" viewBox="0 0 18 18" fill="none">
+            <rect x="2" y="2" width="14" height="14" rx="2" stroke="white" stroke-width="2" fill="none"/>
+            <path d="M6 9h6M9 6v6" stroke="#00C853" stroke-width="2" stroke-linecap="round"/>
+          </svg>
+        </div>
+        <div>
+          <div class="store-name">Fuga</div>
+          <div class="store-moq-neutral">MOQ 8 set · Calicut</div>
+        </div>
+      </div>
+      <div style="display:flex;gap:6px;">
+        <button class="action-btn">Call</button>
+        <button class="action-btn">Chat</button>
+      </div>
+    </div>
+    <div class="prod-grid prod-grid-6" style="padding-bottom:4px;">
+      <div class="prod-thumb" style="background:#00C853;"></div>
+      <div class="prod-thumb" style="background:#009624;"></div>
+      <div class="prod-thumb" style="background:#00b248;"></div>
+      <div class="prod-thumb" style="background:#00C853;"></div>
+      <div class="prod-thumb" style="background:#007a30;"></div>
+      <div class="prod-thumb" style="background:#00C853;"></div>
+      <div class="prod-thumb" style="background:#009624;"></div>
+      <div class="prod-thumb" style="background:#00C853;"></div>
+      <div class="prod-thumb" style="background:#00C853;"></div>
+      <div class="prod-thumb" style="background:#00b248;"></div>
+      <div class="prod-thumb" style="background:#00C853;"></div>
+      <div class="prod-thumb" style="background:#009624;"></div>
+    </div>
+    <div class="preorder-bar">
+      <div class="preorder-thumbs">
+        <div class="preorder-thumb" style="background:#00C853;"></div>
+        <div class="preorder-thumb" style="background:#007a30;"></div>
+        <div class="preorder-thumb" style="background:#009624;"></div>
+      </div>
+      <div>
+        <div class="preorder-text">New collection dropping soon</div>
+        <div class="preorder-sub">PRE-PAY TO GET 5% PRICE-CUT</div>
+      </div>
+    </div>
+  </div>
+
+  <!-- bottom spacer -->
+  <div style="height:12px;"></div>
+</main>
+
+<!-- ══════════════════════════════════
+     BOTTOM NAV
+══════════════════════════════════ -->
+<nav id="bottom-navbar" class="bottom-nav max-w-7xl mx-auto w-full">
+  <a href="index.html" class="nav-btn" onclick="setActive(this)">
+    <div class="nav-ic">
+      <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24">
+        <path d="M3 12L12 3l9 9M5 10v10a1 1 0 001 1h4v-5h4v5h4a1 1 0 001-1V10"/>
+      </svg>
+    </div>
+    <span class="nav-lbl">Home</span>
+  </a>
+
+  <a href="search2.html" class="nav-btn">
+    <div class="nav-ic">
+      <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24">
+        <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
+      </svg>
+    </div>
+    <span class="nav-lbl">Search</span>
+  </a>
+
+  <button class="nav-btn active" onclick="setActive(this)">
+    <div class="nav-ic">
+      <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24">
+        <path d="M4 6h16M4 12h16M4 18h16"/>
+      </svg>
+    </div>
+    <span class="nav-lbl">Feed</span>
+  </button>
+
+  <a href="category.html" class="nav-btn">
+    <div class="nav-ic">
+      <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24">
+        <rect x="3" y="3" width="7" height="7" rx="1"/>
+        <rect x="14" y="3" width="7" height="7" rx="1"/>
+        <rect x="3" y="14" width="7" height="7" rx="1"/>
+        <rect x="14" y="14" width="7" height="7" rx="1"/>
+      </svg>
+    </div>
+    <span class="nav-lbl">Category</span>
+  </a>
+
+  <a href="orders.html" class="nav-btn">
+    <div class="nav-ic">
+      <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24">
+        <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/>
+        <rect x="9" y="3" width="6" height="4" rx="1"/>
+        <path d="M9 12h6M9 16h4"/>
+      </svg>
+    </div>
+    <span class="nav-lbl">Orders</span>
+  </a>
+</nav>
+
+<script>
+  function switchTab(el, tab) {
+    document.querySelectorAll('.feed-tab').forEach(t => t.classList.remove('active'));
+    el.classList.add('active');
+  }
+
+  function setActive(el) {
+    document.querySelectorAll('.nav-btn').forEach(b => b.classList.remove('active'));
+    el.classList.add('active');
+  }
+
+  // Stagger card animations
+  document.querySelectorAll('.feed-card, .split-row').forEach((el, i) => {
+    el.style.animationDelay = `${i * 0.07}s`;
+    el.classList.add('fade-up');
+  });
+</script>
+<!-- Floating Channels Button -->
+<div class="fixed bottom-[80px] left-0 right-0 z-50 max-w-7xl mx-auto w-full pointer-events-none flex justify-end px-4 md:px-8">
+  <button class="pointer-events-auto flex flex-col items-center justify-center w-[60px] h-[60px] rounded-[14px] transition-transform hover:scale-105" style="background: linear-gradient(#EAEAE8, #EAEAE8) padding-box, linear-gradient(135deg, #4A90E2, #FF5E5E) border-box; border: 1.5px solid transparent; box-shadow: 0 4px 12px rgba(0,0,0,0.15);">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0A0A0A" stroke-width="1.5" class="mb-0.5">
+      <rect x="10.5" y="10.5" width="3" height="3" />
+      <line x1="12" y1="10.5" x2="12" y2="4" />
+      <line x1="12" y1="13.5" x2="12" y2="20" />
+      <line x1="10.5" y1="12" x2="4" y2="12" />
+      <line x1="13.5" y1="12" x2="20" y2="12" />
+      <line x1="10.5" y1="10.5" x2="6.5" y2="6.5" />
+      <line x1="13.5" y1="13.5" x2="17.5" y2="17.5" />
+      <line x1="13.5" y1="10.5" x2="17.5" y2="6.5" />
+      <line x1="10.5" y1="13.5" x2="6.5" y2="17.5" />
+      <circle cx="12" cy="3.5" r="1.5" />
+      <circle cx="12" cy="20.5" r="1.5" />
+      <circle cx="3.5" cy="12" r="1.5" />
+      <circle cx="20.5" cy="12" r="1.5" />
+      <circle cx="5.5" cy="5.5" r="1.5" />
+      <circle cx="18.5" cy="18.5" r="1.5" />
+      <circle cx="18.5" cy="5.5" r="1.5" />
+      <circle cx="5.5" cy="18.5" r="1.5" />
+    </svg>
+    <span class="text-[10px] font-medium text-ink leading-none mt-0.5">Channels</span>
+  </button>
+</div>
+
+</body>
+</html>
