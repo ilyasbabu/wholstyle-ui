@@ -19,6 +19,7 @@ tailwind.config = {
         muted: '#9E9E9E',
         surface: '#FFFFFF',
         overlay: 'rgba(10,10,10,0.06)',
+        highlight: '#5BB8F5',
       },
       fontFamily: {
         display: ['Playfair Display', 'serif'],
@@ -695,27 +696,27 @@ tailwind.config = {
     </button>
 
     <!-- Search -->
-    <button class="nav-item flex flex-col items-center gap-1 px-3" onclick="setActive(this)">
+    <a href="search2.html" class="nav-item flex flex-col items-center gap-1 px-3" onclick="setActive(this)">
       <div class="nav-icon text-muted">
         <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24">
           <circle cx="11" cy="11" r="8"/><line x1="21" y1="21" x2="16.65" y2="16.65"/>
         </svg>
       </div>
       <span class="nav-label text-[10px] text-muted">Search</span>
-    </button>
+    </a>
 
     <!-- Feed -->
-    <button class="nav-item flex flex-col items-center gap-1 px-3" onclick="setActive(this)">
+    <a href="feed.html" class="nav-item flex flex-col items-center gap-1 px-3">
       <div class="nav-icon text-muted">
         <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24">
           <path d="M4 6h16M4 12h16M4 18h16"/>
         </svg>
       </div>
       <span class="nav-label text-[10px] text-muted">Feed</span>
-    </button>
+    </a>
 
     <!-- Category -->
-    <button class="nav-item flex flex-col items-center gap-1 px-3" onclick="setActive(this)">
+    <a href="category.html" class="nav-item flex flex-col items-center gap-1 px-3">
       <div class="nav-icon text-muted">
         <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24">
           <rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/>
@@ -723,10 +724,10 @@ tailwind.config = {
         </svg>
       </div>
       <span class="nav-label text-[10px] text-muted">Category</span>
-    </button>
+    </a>
 
     <!-- Orders -->
-    <button class="nav-item flex flex-col items-center gap-1 px-3" onclick="setActive(this)">
+    <a href="orders.html" class="nav-item flex flex-col items-center gap-1 px-3">
       <div class="nav-icon text-muted">
         <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24">
           <path d="M9 5H7a2 2 0 00-2 2v12a2 2 0 002 2h10a2 2 0 002-2V7a2 2 0 00-2-2h-2"/>
@@ -735,7 +736,7 @@ tailwind.config = {
         </svg>
       </div>
       <span class="nav-label text-[10px] text-muted">Orders</span>
-    </button>
+    </a>
 
   </div>
 </nav>
@@ -761,5 +762,31 @@ tailwind.config = {
     el.style.animationDelay = `${i * 0.06}s`;
   });
 </script>
+<!-- Floating Channels Button -->
+<div class="fixed bottom-[80px] left-0 right-0 z-50 max-w-7xl mx-auto w-full pointer-events-none flex justify-end px-4 md:px-8">
+  <button class="pointer-events-auto flex flex-col items-center justify-center w-[60px] h-[60px] rounded-[14px] transition-transform hover:scale-105" style="background: linear-gradient(#EAEAE8, #EAEAE8) padding-box, linear-gradient(135deg, #4A90E2, #FF5E5E) border-box; border: 1.5px solid transparent; box-shadow: 0 4px 12px rgba(0,0,0,0.15);">
+    <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0A0A0A" stroke-width="1.5" class="mb-0.5">
+      <rect x="10.5" y="10.5" width="3" height="3" />
+      <line x1="12" y1="10.5" x2="12" y2="4" />
+      <line x1="12" y1="13.5" x2="12" y2="20" />
+      <line x1="10.5" y1="12" x2="4" y2="12" />
+      <line x1="13.5" y1="12" x2="20" y2="12" />
+      <line x1="10.5" y1="10.5" x2="6.5" y2="6.5" />
+      <line x1="13.5" y1="13.5" x2="17.5" y2="17.5" />
+      <line x1="13.5" y1="10.5" x2="17.5" y2="6.5" />
+      <line x1="10.5" y1="13.5" x2="6.5" y2="17.5" />
+      <circle cx="12" cy="3.5" r="1.5" />
+      <circle cx="12" cy="20.5" r="1.5" />
+      <circle cx="3.5" cy="12" r="1.5" />
+      <circle cx="20.5" cy="12" r="1.5" />
+      <circle cx="5.5" cy="5.5" r="1.5" />
+      <circle cx="18.5" cy="18.5" r="1.5" />
+      <circle cx="18.5" cy="5.5" r="1.5" />
+      <circle cx="5.5" cy="18.5" r="1.5" />
+    </svg>
+    <span class="text-[10px] font-medium text-ink leading-none mt-0.5">Channels</span>
+  </button>
+</div>
+
 </body>
 </html>
