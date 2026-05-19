@@ -292,7 +292,7 @@ tailwind.config = {
 <!-- ══════════════════════════════════
      FIXED TOP HEADER STACK
 ══════════════════════════════════ -->
-<header id="top-navbar" class="fixed top-0 left-0 right-0 z-50 max-w-7xl mx-auto w-full">
+<header id="top-navbar" class="fixed top-0 left-0 right-0 z-50 max-w-7xl mx-auto w-full transition-transform duration-300">
 
   <!-- Layer 1: Filter bar -->
   <div class="top-toolbar px-3 py-2.5 md:px-8">
@@ -715,9 +715,26 @@ tailwind.config = {
     el.querySelector('.nav-label').classList.add('text-brand', 'font-semibold');
     el.querySelector('.nav-label').classList.remove('text-muted');
   }
+
+  // Header scroll behavior
+  let lastScrollY = window.scrollY;
+  const topNavbar = document.getElementById('top-navbar');
+
+  window.addEventListener('scroll', () => {
+    const currentScrollY = window.scrollY;
+    
+    // If scrolling down and past 50px, hide the header
+    if (currentScrollY > lastScrollY && currentScrollY > 50) {
+      topNavbar.style.transform = 'translateY(-100%)';
+    } else {
+      // If scrolling up, show it
+      topNavbar.style.transform = 'translateY(0)';
+    }
+    lastScrollY = currentScrollY;
+  }, { passive: true });
 </script>
 <!-- Floating Channels Button -->
-<div class="fixed bottom-[80px] left-0 right-0 z-50 max-w-7xl mx-auto w-full pointer-events-none flex justify-end px-4 md:px-8">
+<div class="fixed bottom-[150px] left-0 right-0 z-50 max-w-7xl mx-auto w-full pointer-events-none flex justify-end px-4 md:px-8">
   <button class="pointer-events-auto flex flex-col items-center justify-center w-[60px] h-[60px] rounded-[14px] transition-transform hover:scale-105" style="background: linear-gradient(#EAEAE8, #EAEAE8) padding-box, linear-gradient(135deg, #4A90E2, #FF5E5E) border-box; border: 1.5px solid transparent; box-shadow: 0 4px 12px rgba(0,0,0,0.15);">
     <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#0A0A0A" stroke-width="1.5" class="mb-0.5">
       <rect x="10.5" y="10.5" width="3" height="3" />
